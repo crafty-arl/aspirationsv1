@@ -5,6 +5,7 @@ import { AuraMationQuoteJukeboxComponent } from "@/components/aura-mation-quote-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 
 export default function Home() {
   const [inviteCode, setInviteCode] = useState('');
@@ -12,7 +13,7 @@ export default function Home() {
   const [error, setError] = useState('');
 
   const verifyInviteCode = () => {
-    if (inviteCode.toUpperCase() === 'BREATHFAM') {
+    if (inviteCode.toUpperCase() === 'BREATHEFAM') {
       setIsVerified(true);
       setError('');
     } else {
@@ -22,11 +23,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="flex h-16 shrink-0 items-center justify-center border-b px-4 bg-background">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b px-4 bg-background">
+        <Button
+          variant="ghost"
+          onClick={() => window.location.href = 'https://auramation.com'}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Aura Mation
+        </Button>
         <h1 className="text-xl font-semibold">Aura Mation</h1>
+        <div className="w-[100px]" /> {/* Spacer for centering */}
       </header>
 
-      <main className="flex-1 flex items-center justify-center">
+      <main className={`flex-1 flex items-center justify-center ${isVerified ? 'bg-[url("/photo_2024-11-18_18-26-30.jpg")] bg-cover bg-center bg-no-repeat' : ''}`}>
         <div className="w-full max-w-2xl px-4">
           <AnimatePresence mode="wait">
             {!isVerified ? (
@@ -36,7 +46,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -20 }}
                 className="text-center space-y-6"
               >
-                <h2 className="text-2xl font-bold">Welcome to the Breath Family Experience</h2>
+                <h2 className="text-2xl font-bold">Welcome to the Breathe Family Experience</h2>
                 <p className="text-muted-foreground">Enter your invite code to unlock a special digital surprise</p>
                 <div className="space-y-4 max-w-sm mx-auto">
                   <Input

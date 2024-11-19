@@ -133,6 +133,17 @@ export function AuraMationQuoteJukeboxComponent() {
                       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                       loading="lazy"
                     />
+                  ) : affirmation && affirmation === affirmations[5] ? (
+                    <iframe 
+                      style={{borderRadius: "12px"}} 
+                      src="https://open.spotify.com/embed/track/0YabP4wwsJCntsxwEkXlhl?utm_source=generator&theme=0" 
+                      width="100%" 
+                      height="352" 
+                      frameBorder="0" 
+                      allowFullScreen 
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                      loading="lazy"
+                    />
                   ) : affirmation && (
                     <motion.a
                       href={spotifyLink}
@@ -165,7 +176,7 @@ export function AuraMationQuoteJukeboxComponent() {
           <Button 
             variant="outline" 
             className="w-full bg-transparent border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            onClick={() => alert("Thank you for your support!")}
+            onClick={() => window.open('https://linktr.ee/Aura_Mation', '_blank')}
           >
             <Heart className="mr-2 h-4 w-4" />
             Donate to Aura Mation
