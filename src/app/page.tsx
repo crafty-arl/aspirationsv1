@@ -1,16 +1,28 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { AuraMationQuoteJukeboxComponent } from "@/components/aura-mation-quote-jukebox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Settings } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function Home() {
+  const router = useRouter();
   const [inviteCode, setInviteCode] = useState('');
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState('');
+  const [adminUsername, setAdminUsername] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [adminError, setAdminError] = useState('');
 
   const verifyInviteCode = () => {
     if (inviteCode.toUpperCase() === 'BREATHEFAM') {
@@ -18,6 +30,15 @@ export default function Home() {
       setError('');
     } else {
       setError('Invalid invite code. Please try again.');
+    }
+  };
+
+  const handleAdminLogin = () => {
+    if (adminUsername === 'admin' && adminPassword === '@uraM@tion') {
+      setAdminError('');
+      router.push('/admin');
+    } else {
+      setAdminError('Invalid credentials');
     }
   };
 
@@ -33,7 +54,36 @@ export default function Home() {
           Back to Aura Mation
         </Button>
         <h1 className="text-xl font-semibold">Aura Mation</h1>
-        <div className="w-[100px]" /> {/* Spacer for centering */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Settings className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Admin Login</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <Input
+                type="text"
+                placeholder="Username"
+                value={adminUsername}
+                onChange={(e) => setAdminUsername(e.target.value)}
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                value={adminPassword}
+                onChange={(e) => setAdminPassword(e.target.value)}
+              />
+              {adminError && <p className="text-red-500 text-sm">{adminError}</p>}
+              <Button onClick={handleAdminLogin} className="w-full">
+                Login
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </header>
 
       <main className={`flex-1 flex items-center justify-center ${isVerified ? 'bg-[url("/photo_2024-11-18_18-26-30.jpg")] bg-cover bg-center bg-no-repeat' : ''}`}>

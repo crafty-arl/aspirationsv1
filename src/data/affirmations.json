@@ -1,0 +1,52 @@
+{
+  "affirmations": [
+    {
+      "text": "Take your meds, Drink your water, Block your ex, Mind your business.",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/3oymjwPBiJS5Hu9YznFFnY",
+      "gradient": {
+        "from": "#9333ea",
+        "to": "#60a5fa"
+      }
+    },
+    {
+      "text": "We are amazing, we are everything.",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/3rU9qMha5CWlx3L1bNIvVG",
+      "gradient": {
+        "from": "#ec4899",
+        "to": "#fb923c"
+      }
+    },
+    {
+      "text": "You can't disturb my peace.",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/1zpnNT7VD1QUCi5P1SHSud",
+      "gradient": {
+        "from": "#4ade80",
+        "to": "#06b6d4"
+      }
+    },
+    {
+      "text": "You are divine, You are worthy, You are perfect, You are love",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/06FKnT7n4poPP0wX9sXSDM",
+      "gradient": {
+        "from": "#facc15",
+        "to": "#ef4444"
+      }
+    },
+    {
+      "text": "Breathe, Breathe, Breathe",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/3udRHkCZCDISJ1wFBNNaCy",
+      "gradient": {
+        "from": "#6366f1",
+        "to": "#a855f7"
+      }
+    },
+    {
+      "text": "Bring me my good-er life",
+      "spotifyEmbed": "https://open.spotify.com/embed/track/0YabP4wwsJCntsxwEkXlhl",
+      "gradient": {
+        "from": "#9333ea",
+        "to": "#60a5fa"
+      }
+    }
+  ]
+}

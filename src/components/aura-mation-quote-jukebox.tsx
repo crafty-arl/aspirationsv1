@@ -1,23 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Sparkles, Heart, Music } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const affirmations = [
-  "Take your meds, Drink your water, Block your ex, Mind your business.", // Take Your Meds by Aura Mation
-  "We are amazing, we are everything.", // We Are Everything by Aura Mation
-  "You can't disturb my peace. ", // You Can't Disturb My Peace by Aura Mation
-  "You are divine, You are worthy, You are perfect, You are love", // The Great Remembering by Aura Mation
-  "Breathe, Breathe, Breathe", // Breathe by Aura Mation
-  "Bring me my good-er life" // Good-er Life by Aura Mation
-]
-
 const gradients = [
   'from-purple-600 to-blue-400',
-  'from-pink-500 to-orange-400',
+  'from-pink-500 to-orange-400', 
   'from-green-400 to-cyan-500',
   'from-yellow-400 to-red-500',
   'from-indigo-500 to-purple-500'
@@ -26,25 +17,50 @@ const gradients = [
 const spotifyPlaylists = [
   "https://open.spotify.com/playlist/37i9dQZF1DX9XIFQuFvzM4",
   "https://open.spotify.com/playlist/37i9dQZF1DWZqd5JICZI0u",
-  "https://open.spotify.com/playlist/37i9dQZF1DX5YTAi6JhwZp",
+  "https://open.spotify.com/playlist/37i9dQZF1DX5YTAi6JhwZp", 
   "https://open.spotify.com/playlist/37i9dQZF1DX0jgyAiPl8Af",
   "https://open.spotify.com/playlist/37i9dQZF1DX9B1hu73DioC"
 ]
 
+// Add interface for affirmation structure
+interface Affirmation {
+  text: string;
+  spotifyEmbed?: string;
+}
+
 export function AuraMationQuoteJukeboxComponent() {
+  const [affirmations, setAffirmations] = useState<Affirmation[]>([])
   const [affirmation, setAffirmation] = useState("")
   const [gradient, setGradient] = useState(gradients[0])
   const [spotifyLink, setSpotifyLink] = useState(spotifyPlaylists[0])
   const [isRevealing, setIsRevealing] = useState(false)
   const [boxShadow, setBoxShadow] = useState('0 10px 30px -5px rgba(0, 0, 0, 0.3)')
+  const [currentSpotifyEmbed, setCurrentSpotifyEmbed] = useState<string | undefined>("")
+
+  useEffect(() => {
+    const fetchAffirmations = async () => {
+      try {
+        const response = await fetch('/api/affirmations')
+        const data = await response.json()
+        setAffirmations(data.affirmations)
+      } catch (error) {
+        console.error('Error loading affirmations:', error)
+      }
+    }
+
+    fetchAffirmations()
+  }, [])
 
   const revealAffirmation = () => {
     setIsRevealing(true)
-    const newAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)]
+    const randomIndex = Math.floor(Math.random() * affirmations.length)
+    const selectedAffirmation = affirmations[randomIndex]
     const newGradient = gradients[Math.floor(Math.random() * gradients.length)]
     const newSpotifyLink = spotifyPlaylists[Math.floor(Math.random() * spotifyPlaylists.length)]
     const newShadowColor = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.3)`
-    setAffirmation(newAffirmation)
+    
+    setAffirmation(selectedAffirmation.text)
+    setCurrentSpotifyEmbed(selectedAffirmation.spotifyEmbed)
     setGradient(newGradient)
     setSpotifyLink(newSpotifyLink)
     setBoxShadow(`0 10px 30px -5px ${newShadowColor}`)
@@ -78,21 +94,10 @@ export function AuraMationQuoteJukeboxComponent() {
                   >
                     {affirmation || "Click below to reveal an affirmation"}
                   </h2>
-                  {affirmation && affirmation === affirmations[0] ? (
+                  {affirmation && currentSpotifyEmbed && (
                     <iframe 
                       style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/3oymjwPBiJS5Hu9YznFFnY?utm_source=generator" 
-                      width="100%" 
-                      height="152" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                    />
-                  ) : affirmation && affirmation === affirmations[1] ? (
-                    <iframe 
-                      style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/3rU9qMha5CWlx3L1bNIvVG?utm_source=generator&theme=0" 
+                      src={currentSpotifyEmbed}
                       width="100%" 
                       height="352" 
                       frameBorder="0" 
@@ -100,51 +105,8 @@ export function AuraMationQuoteJukeboxComponent() {
                       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                       loading="lazy"
                     />
-                  ) : affirmation && affirmation === affirmations[2] ? (
-                    <iframe 
-                      style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/1zpnNT7VD1QUCi5P1SHSud?utm_source=generator&theme=0" 
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                    />
-                  ) : affirmation && affirmation === affirmations[3] ? (
-                    <iframe 
-                      style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/06FKnT7n4poPP0wX9sXSDM?utm_source=generator&theme=0" 
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                    />
-                  ) : affirmation && affirmation === affirmations[4] ? (
-                    <iframe 
-                      style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/3udRHkCZCDISJ1wFBNNaCy?utm_source=generator" 
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                    />
-                  ) : affirmation && affirmation === affirmations[5] ? (
-                    <iframe 
-                      style={{borderRadius: "12px"}} 
-                      src="https://open.spotify.com/embed/track/0YabP4wwsJCntsxwEkXlhl?utm_source=generator&theme=0" 
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                    />
-                  ) : affirmation && (
+                  )}
+                  {affirmation && !currentSpotifyEmbed && (
                     <motion.a
                       href={spotifyLink}
                       target="_blank"
